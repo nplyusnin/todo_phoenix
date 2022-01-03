@@ -1,0 +1,25 @@
+<h1><%= @list.title %></h1>
+
+<ul>
+<%= for entry <- @list.entries do %>
+  <li><%= entry.body %></li>
+<% end %>
+</ul>
+
+<.form let={f} for={@changeset} action={Routes.list_entry_path(@conn, :create, @list)}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :body %>
+  <%= text_input f, :body %>
+  <%= error_tag f, :body %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+</.form>
+
+<%= link "Back", to: Routes.list_path(@conn, :index) %>

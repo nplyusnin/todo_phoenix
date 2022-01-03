@@ -17,6 +17,10 @@ defmodule TodoWeb.Router do
   scope "/", TodoWeb do
     pipe_through :browser
 
+    resources "lists", ListController do
+      resources "entries", EntryController, only: [:create]
+    end
+
     get "/", PageController, :index
   end
 
