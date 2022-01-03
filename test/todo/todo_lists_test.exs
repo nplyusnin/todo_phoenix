@@ -5,6 +5,7 @@ defmodule Todo.TodoListsTest do
 
   describe "lists" do
     alias Todo.TodoLists.List
+    alias Todo.TodoLists.Entry
 
     import Todo.TodoListsFixtures
 
@@ -54,6 +55,25 @@ defmodule Todo.TodoListsTest do
     test "change_list/1 returns a list changeset" do
       list = list_fixture()
       assert %Ecto.Changeset{} = TodoLists.change_list(list)
+    end
+
+    test "create_entry/2 with valid data creates a entry" do
+      list = list_fixture()
+      valid_attrs = %{body: "some body"}
+      assert {:ok, %Entry{} = entry} = TodoLists.create_entry(list, valid_attrs)
+      assert entry.body == "some body"
+    end
+
+    test "create_entry/2 with invalid data returns error changeset" do
+      list = list_fixture()
+      invalid_attrs = %{body: nil}
+
+      assert {:error, %Ecto.Changeset{}} = TodoLists.create_entry(list, invalid_attrs)
+    end
+
+    test "change_entry/1 returns a entry changeset" do
+      entry = etnry_fixture()
+      assert %Ecto.Changeset{} = TodoLists.change_entry(entry)
     end
   end
 end

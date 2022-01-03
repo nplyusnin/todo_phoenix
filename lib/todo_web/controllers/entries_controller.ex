@@ -1,6 +1,7 @@
 defmodule TodoWeb.EntryController do
   use TodoWeb, :controller
 
+  alias Todo.Repo
   alias Todo.TodoLists
   alias Todo.TodoLists.Entry
 
@@ -14,6 +15,9 @@ defmodule TodoWeb.EntryController do
         |> redirect(to: Routes.list_path(conn, :show, list))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        list = list
+        |> Repo.preload(:entries)
+
         render(conn, TodoWeb.ListView, "show.html", changeset: changeset, list: list)
     end
   end

@@ -9,10 +9,6 @@ defmodule Todo.TodoLists do
     Repo.all(List)
   end
 
-  def get_entries(%List{} = list) do
-    Repo.get()
-  end
-
   def get_list(id) do
     Repo.get!(List, id)
   end
